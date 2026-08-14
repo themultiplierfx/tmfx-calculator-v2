@@ -1,26 +1,184 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TMFX</title><style>*{box-sizing:border-box;font-family:Arial}body{margin:0;padding:10px;background:#020b1a;display:flex;flex-direction:column;align-items:center}.card{background:#0a1a2e;border:1px solid #1e3a5f;border-radius:12px;padding:12px;width:100%;max-width:650px;margin:auto}label{font-size:8.5px;color:#7aa3c7;display:block;margin-top:6px;font-weight:700}input,select{width:100%;background:#061a33;border:1px solid #1a3a5a;color:#fff;padding:12px;border-radius:8px;margin-top:3px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btnRed{width:100%;background:#dc2626;color:#fff;border:0;padding:14px;border-radius:8px;font-weight:900;margin-top:12px;cursor:pointer}.btnBlue{width:100%;background:#0f2d5a;color:#60a5fa;border:2px solid #3b82f6;padding:12px;border-radius:8px;margin-top:12px;font-weight:900;cursor:pointer}.hlBox{border:1px solid #1e3a5f;border-radius:10px;padding:12px;margin-top:12px;background:#081428}.lotBox{background:#0d2818;border:2px solid #22c55e;border-radius:10px;padding:12px;margin-top:12px}.hidden{display:none!important}table{width:100%;border-collapse:collapse;margin-top:16px}td{border:1px solid #000;padding:10px;text-align:center;font-size:11px;font-weight:700}.red{background:#dc2626;color:#fff;font-size:18px;font-weight:900}.dark{background:#0a0a0a;color:#fff}.gray{background:#2a2f3a;color:#fff}.r{background:#2e1f0a;color:#ffcc80}.p{background:#000;color:#fff}.s{background:#1a2a0a;color:#c5ff80}.resultHead{background:#fbbf24;color:#000;font-weight:900;font-size:12px;border:2px solid #fbbf24}.yellowCell{background:#fff;color:#000;font-size:13px;font-weight:900;border:2px solid #fbbf24}.greenCell{background:#dcfce7;color:#000;font-size:13px;font-weight:900;border:2px solid #22c55e}.lotHighlight{background:#dbeafe!important;color:#000!important;font-size:16px!important;border:2px solid #3b82f6!important}.profitHighlight{background:#dcfce7!important;color:#000!important;font-size:16px!important;border:2px solid #22c55e!important}#apiStatus{font-size:10px;text-align:center;margin-top:8px;font-weight:900;padding:6px;border-radius:6px}#resultSection table{border:3px solid #fbbf24;border-radius:10px;overflow:hidden}.risk-box{max-width:650px;width:100%;margin:20px auto;padding:14px;background:#fffbeb;border-left:4px solid #f59e0b;border-radius:8px;font-size:11px;color:#78350f}.footer{text-align:center;margin-top:18px;padding:12px;background:#081428;border:1px solid #1e3a5f;border-radius:10px;color:#7aa3c7;font-size:10px;width:100%;max-width:650px}</style></head><body><div class="card"><div style="text-align:center;color:#fbbf24;font-weight:900;letter-spacing:2px">TMFX SAFE TRADE CALCULATOR</div><div id="box1" class="hlBox" style="border-color:#fbbf24"><b style="color:#fbbf24;font-size:11px">BOX 1: SELECT PAIR</b><div class="g2" style="margin-top:8px"><div><label>SELECT PAIR</label><select id="pairD" onchange="if(modeD.value=='auto')autoFillAPI()">
-<option>GOLD</option><option>XAUUSD</option><option>XAGUSD</option><option>SILVER</option><option>XPDUSD</option><option>XPTUSD</option><option>AUXUSD</option>
-<option>BTCUSD</option><option>ETHUSD</option><option>SOLUSD</option><option>LTCUSD</option><option>XRPUSD</option>
-<option>EURUSD</option><option>GBPUSD</option><option>NZDUSD</option><option>AUDUSD</option><option>USDCAD</option><option>USDCHF</option><option>USDJPY</option>
-<option>EURJPY</option><option>GBPJPY</option><option>AUDJPY</option><option>NZDJPY</option><option>CADJPY</option><option>CHFJPY</option>
-<option>EURGBP</option><option>EURAUD</option><option>EURCAD</option><option>EURCHF</option><option>EURNZD</option>
-<option>GBPAUD</option><option>GBPCAD</option><option>GBPCHF</option><option>GBPNZD</option>
-<option>AUDCAD</option><option>AUDCHF</option><option>AUDNZD</option><option>NZDCAD</option><option>CADCHF</option>
-</select></div><div><label>MODE</label><select id="modeD" onchange="changeMode()" style="background:#1a1500;color:#fbbf24;font-weight:900;border:2px solid #fbbf24"><option value="auto" selected>AUTO</option><option value="manual">MANUAL</option></select></div></div></div><div id="apiStatus" style="background:#052e16;border:1px solid #22c55e;color:#22c55e">● AUTO: Connecting...</div><div id="box2" class="hlBox"><b style="color:#fbbf24;font-size:11px">BOX 2: MARKET DATA (HLC + CURRENT)</b><div class="g3" style="margin-top:6px"><div><label>DAILY HIGH</label><input id="dh" type="number"></div><div><label>DAILY LOW</label><input id="dl" type="number"></div><div><label>DAILY CLOSE</label><input id="dc" type="number"></div></div>
-<div class="g3" style="margin-top:6px"><div><label>WEEKLY HIGH</label><input id="wh" type="number"></div><div><label>WEEKLY LOW</label><input id="wl" type="number"></div><div><label>WEEKLY CLOSE</label><input id="wc" type="number"></div></div><div style="margin-top:8px"><label style="color:#22c55e">CURRENT PRICE</label><input id="cpD" type="number" style="border-color:#22c55e;background:#052e16;border-width:2px"></div><button id="calcHLCBtn" class="btnBlue" onclick="calcHLCOnly()">CALCULATE HLC → SHOW R/S TABLE</button></div><div id="box3" class="lotBox"><b style="color:#22c55e;font-size:11px">BOX 3: SAFE LOT CALCULATION</b><div style="margin-top:8px"><label style="color:#fbbf24">BALANCE + $/¢ *REQUIRED</label><div style="display:flex;gap:6px"><input id="balInput" type="number" placeholder="Enter Balance" style="flex:2;border:2px solid #fbbf24" oninput="calcBalance()"><select id="balType" onchange="calcBalance()" style="flex:1;background:#1a1500;color:#fbbf24;font-weight:900;border:2px solid #fbbf24"><option value="" disabled selected>SELECT $/¢</option><option value="dollar">Dollar $</option><option value="cent">Cent ¢</option></select></div><div id="balShow" style="text-align:center;font-size:11px;color:#fff;margin-top:8px;font-weight:800;background:#1a1500;padding:6px;border-radius:6px;border:1px dashed #fbbf24">⚠️ Enter balance and select $ or ¢</div></div><div class="g2" style="margin-top:8px"><div><label>SL</label><input id="slD" type="number"></div><div><label>TP</label><input id="tpD" type="number"></div></div></div><div id="box4"><button class="btnRed" onclick="doCalculate()">CALCULATE LOT & PROFIT → SHOW ALL</button></div><div id="resultSection" class="hidden"><div id="pivotPart"><table><tr><td colspan="3" class="red" id="pName">GOLD</td></tr><tr><td class="dark"></td><td class="gray">DAILY</td><td class="gray">WEEKLY</td></tr><tr><td class="r">R5</td><td class="r" id="dR5">-</td><td class="r" id="wR5">-</td></tr><tr><td class="r">R4</td><td class="r" id="dR4">-</td><td class="r" id="wR4">-</td></tr><tr><td class="r">R3</td><td class="r" id="dR3">-</td><td class="r" id="wR3">-</td></tr><tr><td class="r">R2</td><td class="r" id="dR2">-</td><td class="r" id="wR2">-</td></tr><tr><td class="r">R1</td><td class="r" id="dR1">-</td><td class="r" id="wR1">-</td></tr><tr><td class="p">P</td><td class="p" id="dP">-</td><td class="p" id="wP">-</td></tr><tr><td class="s">S1</td><td class="s" id="dS1">-</td><td class="s" id="wS1">-</td></tr><tr><td class="s">S2</td><td class="s" id="dS2">-</td><td class="s" id="wS2">-</td></tr><tr><td class="s">S3</td><td class="s" id="dS3">-</td><td class="s" id="wS3">-</td></tr><tr><td class="s">S4</td><td class="s" id="dS4">-</td><td class="s" id="wS4">-</td></tr><tr><td class="s">S5</td><td class="s" id="dS5">-</td><td class="s" id="wS5">-</td></tr></table></div><div id="lotPart" class="hidden"><table><tr><td class="resultHead" style="background:#000;color:#fbbf24">RESULT</td><td class="resultHead">Dollar</td><td class="resultHead">Cent</td></tr>
-<tr><td class="resultHead" style="background:#052e16;color:#22c55e">BALANCE</td><td class="greenCell" id="balD">-</td><td class="greenCell" id="balC">-</td></tr><tr><td class="resultHead" style="background:#1a1500;color:#fbbf24">APPROVAL</td><td class="yellowCell" style="background:#fef9c3" id="appD">-</td><td class="yellowCell" style="background:#fef9c3" id="appC">-</td></tr><tr><td class="resultHead" style="background:#0f2d5a;color:#60a5fa;border:2px solid #3b82f6">LOT SIZE ⭐</td><td class="lotHighlight yellowCell" id="lotD">-</td><td class="lotHighlight yellowCell" id="lotC">-</td></tr><tr><td class="resultHead" style="background:#052e16;color:#4ade80;border:2px solid #22c55e">PROFIT 💰</td><td class="profitHighlight yellowCell" id="profD">-</td><td class="profitHighlight yellowCell" id="profC">-</td></tr><tr><td class="resultHead" style="background:#fbbf24;color:#000">TOTAL</td><td class="resultHead" style="background:#000;color:#facc15" id="totD">-</td><td class="resultHead" style="background:#000;color:#facc15" id="totC">-</td></tr></table></div><button class="btnBlue" onclick="location.reload()">SHOW INPUTS AGAIN ▼</button><a style="width:100%;background:#dc2626;color:#fff;padding:12px;border-radius:8px;margin-top:10px;font-weight:900;display:block;text-align:center;text-decoration:none" href="https://wa.me/2349118119077?text=Hello%20TMFX" target="_blank">💬 WHATSAPP - TRADE SAFE</a></div></div><div class="risk-box"><b>⚠️ Risk Disclaimer</b><br>For education only. Trading is risky. API may be delayed. Trade only what you can lose.<br><span style="font-size:9px;opacity:.7">© 2026 THEMULTIPLIERFX</span></div><div class="footer"><b style="color:#fbbf24">TMFX SAFE TRADE CALCULATOR</b><br>TheMultiplierFx@gmail.com | 09118119077</div><script>
-function getX(p){let g=['GOLD','XAUUSD','XPDUSD','XPTUSD','AUXUSD'],b=['BTCUSD','ETHUSD','SOLUSD','LTCUSD','XRPUSD'],f=['EURUSD','GBPUSD','NZDUSD','AUDUSD','USDCAD','USDCHF','EURGBP','EURAUD','EURCAD','EURCHF','EURNZD','GBPAUD','GBPCAD','GBPCHF','GBPNZD','AUDCAD','AUDCHF','AUDNZD','NZDCAD','CADCHF','NZCHF'],j=['USDJPY','EURJPY','GBPJPY','AUDJPY','NZDJPY','CADJPY','CHFJPY'];if(g.includes(p))return 100;if(b.includes(p))return 1;if(f.includes(p))return 100000;if(j.includes(p))return 1000;if(p=='SILVER'||p=='XAGUSD')return 5000;return 100000;}
-function priceDecimals(p){p=p.toUpperCase();if(p.includes('JPY'))return 3;if(['EURUSD','GBPUSD','NZDUSD','AUDUSD','USDCAD','USDCHF','EURGBP','EURAUD','EURCAD','EURCHF','EURNZD','GBPAUD','GBPCAD','GBPCHF','GBPNZD','AUDCAD','AUDCHF','AUDNZD','NZDCAD','CADCHF','NZCHF','EURJPY','GBPJPY','AUDJPY','NZDJPY','CADJPY','CHFJPY','USDJPY'].includes(p))return 5;return 2;}
-function levels(H,L,C){if(!H||!L||!C)return null;let P=(H+L+C)/3;return{R5:H+4*(P-L),R4:H+3*(P-L),R3:H+2*(P-L),R2:P+(H-L),R1:2*P-L,P:P,S1:2*P-H,S2:P-(H-L),S3:L-2*(H-P),S4:L-3*(H-P),S5:L-4*(H-P)};}
-let balDollar=0,balCent=0;
-function calcBalance(){let v=+balInput.value||0,t=balType.value,sh=document.getElementById('balShow');if(!t||!v){sh.innerText='⚠️ Enter balance and select $ or ¢';return false;}if(t=='dollar'){balDollar=v;balCent=v*100;}else{balCent=v;balDollar=v/100;}sh.innerText='Dollar: $'+balDollar.toFixed(2)+' | Cent: '+balCent.toFixed(2)+'¢';sh.style.color='#fbbf24';pName.innerText=pairD.value;balD.innerText='$'+balDollar.toFixed(2);balC.innerText=balCent.toFixed(2)+'¢';return true;}
-function calcDaily(){let o=levels(+dh.value,+dl.value,+dc.value);if(!o)return;let d=priceDecimals(pairD.value);['R5','R4','R3','R2','R1','P','S1','S2','S3','S4','S5'].forEach(k=>document.getElementById('d'+k).innerText=o[k].toFixed(d));}
-function calcWeekly(){let o=levels(+wh.value,+wl.value,+wc.value);if(!o)return;let d=priceDecimals(pairD.value);['R5','R4','R3','R2','R1','P','S1','S2','S3','S4','S5'].forEach(k=>document.getElementById('w'+k).innerText=o[k].toFixed(d));}
-function calcLot(){calcBalance();let X=getX(pairD.value),cp=+cpD.value,sl=+slD.value,tp=+tpD.value;if(!cp||!sl||!tp){alert('Fill Current, SL, TP');return false;}let YD=Math.abs(cp-sl)*X,ZD=Math.abs(cp-tp)*X;let lD=YD>0?Math.floor(balDollar/YD*100)/100:0,lC=YD>0?Math.floor(balCent/YD*100)/100:0;if(lD<0.01)lD=0;if(lC<0.01)lC=0;appD.innerText=lD>=0.01?'OK':'LOW FUNDS';appC.innerText=lC>=0.01?'OK':'LOW FUNDS';lotD.innerText=lD.toFixed(2);lotC.innerText=lC.toFixed(2);profD.innerText=(lD*ZD).toFixed(2);profC.innerText=(lC*ZD).toFixed(2);totD.innerText=(balDollar+lD*ZD).toFixed(2);totC.innerText=(balCent+lC*ZD).toFixed(2);return true;}
-function calcHLCOnly(){if(!dh.value||!dl.value||!dc.value||!wh.value||!wl.value||!wc.value){alert('Fill Daily and Weekly HLC first');return;}calcDaily();calcWeekly();resultSection.classList.remove('hidden');pivotPart.classList.remove('hidden');lotPart.classList.add('hidden');pivotPart.scrollIntoView({behavior:'smooth'});}
-function changeMode(){let m=modeD.value,st=apiStatus;if(m=='manual'){st.innerText='● MANUAL: Enter HLC & Current yourself';st.style.color='#fbbf24';st.style.background='#1a1500';st.style.border='1px dashed #fbbf24';dh.value='';dl.value='';dc.value='';wh.value='';wl.value='';wc.value='';cpD.value='';}else{st.style.color='#22c55e';st.style.background='#052e16';st.style.border='1px solid #22c55e';autoFillAPI();}}
-function doCalculate(){let bt=balType,bi=balInput,sh=balShow;if(!bt.value){alert('Select Dollar $ or Cent ¢');bt.focus();bt.style.border='3px solid #dc2626';sh.innerText='❌ SELECT $ or ¢ BEFORE CALCULATE';sh.style.color='#ff4444';box3.scrollIntoView({behavior:'smooth'});return;}if(!bi.value){alert('Enter Balance');bi.focus();return;}calcDaily();calcWeekly();if(!calcLot())return;pivotPart.classList.remove('hidden');lotPart.classList.remove('hidden');resultSection.classList.remove('hidden');box1.classList.add('hidden');box2.classList.add('hidden');box3.classList.add('hidden');box4.classList.add('hidden');apiStatus.classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'});}
-const API_KEY='cc79b07b3b51480db6fef93dc2220320';
-async function autoFillAPI(){if(modeD.value=='manual')return;let pair=pairD.value.toUpperCase(),st=apiStatus;st.innerText='● AUTO: Loading '+pair+'...';let sym=pair;if(pair==='GOLD'||pair==='XAUUSD'||pair==='AUXUSD')sym='XAU/USD';else if(pair==='SILVER'||pair==='XAGUSD')sym='XAG/USD';else if(pair==='XPDUSD')sym='XPD/USD';else if(pair==='XPTUSD')sym='XPT/USD';else if(pair.length===6)sym=pair.slice(0,3)+'/'+pair.slice(3,6);try{let dUrl=`https://api.twelvedata.com/time_series?symbol=${sym}&interval=1day&apikey=${API_KEY}`,wUrl=`https://api.twelvedata.com/time_series?symbol=${sym}&interval=1week&apikey=${API_KEY}`;let[dR,wR]=await Promise.all([fetch(dUrl),fetch(wUrl)]);let dD=await dR.json(),wD=await wR.json();if(!dD.values){st.innerText='● API Error: '+(dD.message||'No data');return;}let d=dD.values[0],w=wD.values?wD.values[0]:d,dec=priceDecimals(pair);dh.value=parseFloat(d.high).toFixed(dec);dl.value=parseFloat(d.low).toFixed(dec);dc.value=parseFloat(d.close).toFixed(dec);wh.value=parseFloat(w.high).toFixed(dec);wl.value=parseFloat(w.low).toFixed(dec);wc.value=parseFloat(w.close).toFixed(dec);cpD.value=parseFloat(d.close).toFixed(dec);calcDaily();calcWeekly();st.innerText='● LIVE: '+pair+' @ '+parseFloat(d.close).toFixed(dec);pName.innerText=pair;}catch(e){st.innerText='● OFFLINE: Check internet';}}
-window.addEventListener('load',()=>{setTimeout(autoFillAPI,1000);});
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TMFX SAFE TRADE CALCULATOR</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#081027;color:#fff;padding:15px}
+h1{text-align:center;color:#ffcc33;font-size:18px;margin:10px 0 15px;letter-spacing:1px}
+.box{background:#12203f;border:1px solid #1e335f;border-radius:12px;padding:15px;margin-bottom:15px}
+.box-title{color:#ffcc33;font-size:13px;font-weight:bold;margin-bottom:10px}
+label{font-size:11px;color:#8aa0c8}
+select,input{width:100%;padding:12px;background:#0b1733;border:1px solid #2a4270;border-radius:8px;color:#fff;margin-top:5px;font-size:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.data-box{background:#0b1733;border:1px solid #2a4270;border-radius:8px;padding:10px;text-align:center;margin-top:5px}
+.data-box span{display:block;font-size:10px;color:#8aa0c8}
+.data-box b{font-size:13px}
+.btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;margin-top:10px}
+.btn-blue{background:#1e90ff;color:#fff}
+.btn-red{background:#ff3344;color:#fff;margin-top:8px}
+.api-error{background:#0a3a1a;border:1px solid #00ff66;color:#00ff66;padding:10px;border-radius:8px;font-size:11px;text-align:center;margin-top:10px;display:none}
+#pairList{position:absolute;z-index:100;width:100%;background:#0b1733;border:1px solid #ffcc33;border-radius:8px;max-height:220px;overflow-y:auto;display:none}
+#pairList div{padding:10px;border-bottom:1px solid #1a2c52;cursor:pointer}
+#pairList div:hover{background:#1e335f}
+.current-price{border:1px solid #00ff66 !important}
+</style>
+</head>
+<body>
+<h1>TMFX SAFE TRADE CALCULATOR</h1>
+
+<div class="box">
+<div class="box-title">BOX 1: SELECT PAIR</div>
+<div class="grid2">
+<div style="position:relative;">
+<label>SELECT PAIR - SEARCH</label>
+<input type="text" id="pairSearch" placeholder="Type e.g USDCAD, GOLD" autocomplete="off" onfocus="showPairList()" onkeyup="filterPairs()">
+<div id="pairList"></div>
+</div>
+<div>
+<label>MODE</label>
+<select id="modeSelect"><option>AUTO</option><option>MANUAL</option></select>
+</div>
+</div>
+<div id="apiError" class="api-error"></div>
+</div>
+<div class="box">
+<div class="box-title">BOX 2: MARKET DATA (HLC + CURRENT)</div>
+<div class="grid3">
+<div><label>DAILY HIGH</label><div class="data-box"><b id="dHigh">-</b></div></div>
+<div><label>DAILY LOW</label><div class="data-box"><b id="dLow">-</b></div></div>
+<div><label>DAILY CLOSE</label><div class="data-box"><b id="dClose">-</b></div></div>
+</div>
+<div class="grid3">
+<div><label>WEEKLY HIGH</label><div class="data-box"><b id="wHigh">-</b></div></div>
+<div><label>WEEKLY LOW</label><div class="data-box"><b id="wLow">-</b></div></div>
+<div><label>WEEKLY CLOSE</label><div class="data-box"><b id="wClose">-</b></div></div>
+</div>
+<div style="margin-top:10px;">
+<label>CURRENT PRICE</label>
+<div class="data-box current-price"><b id="cPrice">Loading...</b></div>
+</div>
+<button class="btn btn-blue" onclick="calculateHLC()">CALCULATE HLC → SHOW R/S TABLE</button>
+<div id="rsTable" style="margin-top:15px;display:none"></div>
+</div>
+
+<div class="box">
+<div class="box-title">BOX 3: SAFE LOT SIZE CALCULATOR</div>
+<div class="grid2">
+<div><label>BALANCE ($)</label><input type="number" id="balance" placeholder="1000"></div>
+<div><label>RISK ($/¢)</label><input type="number" id="risk" placeholder="0.05" value="0.05"></div>
+</div>
+<div style="margin-top:10px;"><label>SAFE LOT SIZE</label><div class="data-box" style="background:#001a33;border-color:#1e90ff;"><b id="safeLot" style="color:#1e90ff;font-size:20px;">-</b></div></div>
+<button class="btn btn-blue" onclick="calculateLot()">CALCULATE SAFE LOT</button>
+<button class="btn btn-red" onclick="resetAll()">🔄 RESET ALL DATA</button>
+</div>
+
+<script>
+const allPairs = ["EURUSD","GBPUSD","USDJPY","USDCAD","USDCHF","AUDUSD","NZDUSD","EURGBP","EURJPY","GBPJPY","GBPAUD","EURCAD","EURAUD","GBPCHF","AUDJPY","CADJPY","GOLD","SILVER","BTCUSD","ETHUSD"];
+const apiKey = "b2bbf2e69a6a4e4d8905d5c8e3a7e2a1"; // your TwelveData key
+
+// init list
+const pairListEl = document.getElementById("pairList");
+function renderList(filter=""){
+  pairListEl.innerHTML="";
+  allPairs.filter(p=>p.includes(filter.toUpperCase())).forEach(p=>{
+    let d=document.createElement("div");
+    d.textContent=p;
+    d.onclick=()=>selectPair(p);
+    pairListEl.appendChild(d);
+  });
+}
+function showPairList(){ renderList(document.getElementById("pairSearch").value); pairListEl.style.display="block"; }
+function filterPairs(){ renderList(document.getElementById("pairSearch").value); pairListEl.style.display="block"; }
+function selectPair(pair){
+  document.getElementById("pairSearch").value=pair;
+  pairListEl.style.display="none";
+  localStorage.setItem("tmfx_pair", pair);
+  fetchData(pair);
+}
+document.addEventListener("click", e=>{ if(!e.target.closest("#pairSearch") &&!e.target.closest("#pairList")) pairListEl.style.display="none"; });
+
+// retain values
+document.getElementById("balance").value = localStorage.getItem("tmfx_balance")||"";
+document.getElementById("risk").value = localStorage.getItem("tmfx_risk")||"0.05";
+document.getElementById("pairSearch").value = localStorage.getItem("tmfx_pair")||"EURUSD";
+document.getElementById("balance").addEventListener("input", e=>localStorage.setItem("tmfx_balance", e.target.value));
+document.getElementById("risk").addEventListener("input", e=>localStorage.setItem("tmfx_risk", e.target.value));
+
+// fetch logic
+async function fetchData(pair){
+  let symbol = pair;
+  if(pair==="GOLD") symbol="XAU/USD";
+  if(pair==="SILVER") symbol="XAG/USD";
+  if(pair==="BTCUSD") symbol="BTC/USD";
+  if(pair==="ETHUSD") symbol="ETH/USD";
+  if(!symbol.includes("/")) symbol = symbol.slice(0,3)+"/"+symbol.slice(3);
+
+  document.getElementById("cPrice").textContent="Connecting...";
+  document.getElementById("apiError").style.display="none";
+
+  try{
+    // daily
+    let d = await fetch(`https://api.twelvedata.com/time_series?symbol=${symbol}&interval=1day&outputsize=2&apikey=${apiKey}`).then(r=>r.json());
+    if(d.code===400 || d.status==="error"){ throw new Error(d.message); }
+    document.getElementById("dHigh").textContent=parseFloat(d.values[0].high).toFixed(5);
+    document.getElementById("dLow").textContent=parseFloat(d.values[0].low).toFixed(5);
+    document.getElementById("dClose").textContent=parseFloat(d.values[0].close).toFixed(5);
+
+    // weekly
+    let w = await fetch(`https://api.twelvedata.com/time_series?symbol=${symbol}&interval=1week&outputsize=2&apikey=${apiKey}`).then(r=>r.json());
+    document.getElementById("wHigh").textContent=parseFloat(w.values[0].high).toFixed(5);
+    document.getElementById("wLow").textContent=parseFloat(w.values[0].low).toFixed(5);
+    document.getElementById("wClose").textContent=parseFloat(w.values[0].close).toFixed(5);
+
+    // price
+    let p = await fetch(`https://api.twelvedata.com/price?symbol=${symbol}&apikey=${apiKey}`).then(r=>r.json());
+    document.getElementById("cPrice").textContent=parseFloat(p.price).toFixed(5);
+    document.getElementById("apiError").style.display="block";
+    document.getElementById("apiError").textContent="✅ LIVE: "+symbol+" Connected";
+  }catch(err){
+    document.getElementById("apiError").style.display="block";
+    document.getElementById("apiError").style.background="#3a0a0a";
+    document.getElementById("apiError").style.color="#ff6666";
+    document.getElementById("apiError").style.borderColor="#ff3344";
+    document.getElementById("apiError").innerHTML="⚠️ API Limit: "+err.message+"<br>Switch to MANUAL or try BTCUSD/EURUSD which is free. SILVER needs PRO plan - use XAGUSD on TradingView for manual.";
+    document.getElementById("cPrice").textContent="Enter Manual";
+  }
+}
+
+function calculateHLC(){ alert("Your HLC Logic here - R/S Table will show"); }
+function calculateLot(){
+  let bal=parseFloat(document.getElementById("balance").value)||0;
+  let risk=parseFloat(document.getElementById("risk").value)||0.05;
+  if(bal<=0){ alert("Enter Balance"); return; }
+  let lot=(bal*0.01/risk/100000).toFixed(2); // example logic
+  document.getElementById("safeLot").textContent=lot+" LOT";
+}
+
+function resetAll(){
+  if(confirm("Reset all?")){
+    localStorage.clear();
+    document.getElementById("balance").value="";
+    document.getElementById("risk").value="0.05";
+    document.getElementById("pairSearch").value="";
+    document.getElementById("dHigh").textContent="-";
+    document.getElementById("dLow").textContent="-";
+    document.getElementById("dClose").textContent="-";
+    document.getElementById("wHigh").textContent="-";
+    document.getElementById("wLow").textContent="-";
+    document.getElementById("wClose").textContent="-";
+    document.getElementById("cPrice").textContent="-";
+    document.getElementById("safeLot").textContent="-";
+    document.getElementById("apiError").style.display="none";
+  }
+}
+
+// auto load last pair
+window.onload=()=>{ let last=localStorage.getItem("tmfx_pair"); if(last) fetchData(last); }
+
+</script>
+</body>
+</html>
